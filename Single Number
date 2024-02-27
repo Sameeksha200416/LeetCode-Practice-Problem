@@ -1,0 +1,15 @@
+LeetCode Problem-136. Single Number
+Link-https://leetcode.com/problems/single-number/description/
+----------------------SOLUTION-------------------------------
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int n=nums.size();
+        int ans =0;
+        for(int i=0;i<nums.size();i++)
+        {
+            ans = ans^nums[i];
+        }
+        return ans;
+    }
+};
