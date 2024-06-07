@@ -1,0 +1,95 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>>result;
+
+            if(nums.size() < 3)
+                return result;
+
+            sort(nums.begin(), nums.end());
+
+            for(int i=0; i<nums.size()-2 ;i++){
+
+                if(i>0  &&  nums[i] == nums[i-1])
+                    continue;       // skip duplicates
+
+                int target = -nums[i];
+                int left = i+1, right = nums.size()-1;
+
+                while(left < right){
+
+                    int currentSum = nums[left] + nums[right];
+
+                    if(currentSum == target){
+
+                        result.push_back({nums[i], nums[left], nums[right]});
+
+                        while(left < right  &&  nums[left] == nums[left+1]){
+                            left++;             // skip duplicates
+                        }
+
+                        while(left < right  &&  nums[right] == nums[right-1]){
+                            right--;            // skip duplicates
+                        }
+
+                        left++;
+                        right--;
+                    } else if(currentSum < target){
+                        left++;
+                    } else{
+                        right--;
+                    }
+                }
+            }
+
+        return result;
+        }
+    };
+        //----------------------2nd way
+//         class Solution {
+// public:
+//     vector<vector<int>> threeSum(vector<int>& nums) {
+//         sort(nums.begin(), nums.end());
+//         // for (int num :nums){
+//         //     cout << num << " ";
+//         // }
+//         vector<vector<int>> out;
+//         int first, second, third;
+//         int left, right;
+//         int sum3;
+//         for (int i = 0; i < nums.size() - 2; i++){
+//             if (i > 0 && nums[i] == nums[i-1]){
+//                 continue;
+//             }
+//             first = nums[i];
+//             left = i + 1;
+//             right = nums.size() - 1;
+//             while ( left < right){
+//                 second = nums[left];
+//                 third = nums[right];
+//                 sum3 = first + second + third;
+//                 if (sum3 == 0){
+//                     out.push_back({first, second, third});
+//                     left++;
+//                     right--;
+//                     while (left<right && nums[left] == nums[left-1]){
+//                         left++;
+//                     }
+//                     while (left<right && nums[right] == nums[right+1]){
+//                         right--;
+//                     }
+                    
+//                 }else if (sum3 < 0){
+//                     left++;
+//                 }else{
+//                     right--;
+//                 }
+
+//             }
+
+
+//         }
+//         return out;
+//     }
+// };
+     
