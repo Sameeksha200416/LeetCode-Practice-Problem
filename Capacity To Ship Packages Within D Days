@@ -1,0 +1,36 @@
+class Solution {
+public:
+bool ispossible(vector<int>& weights,int mid,int days){
+    int n = weights.size();
+    int sum = 0;
+    int count =1;
+    for(int i=0;i<n;i++){
+        sum += weights[i];
+        if(sum>mid){
+            count++;
+            sum = weights[i];
+        }
+    }
+    return count<=days;
+}
+    int shipWithinDays(vector<int>& weights, int days) {
+        int maxCapacity = 0;
+        int n = weights.size();
+        for(int i=0;i<n;i++){
+            maxCapacity += weights[i];
+        }
+        //Binary Search Approach
+            int low = *max_element(weights.begin(),weights.end());
+            int high = maxCapacity;
+            int result;
+            while(low <= high){
+                int mid = low+(high-low)/2;//to avoid overflow 
+                if (ispossible(weights,mid,days)){
+                    result = mid;//Store the current valid capacity
+                    high = mid-1;//Try to find a smaller valid capacity
+                }
+                else {low = mid+1;}
+            }
+            return result;
+    }
+};
