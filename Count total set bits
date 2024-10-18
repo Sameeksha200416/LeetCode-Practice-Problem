@@ -1,0 +1,23 @@
+class Solution{
+    public:
+    // n: input to count the number of set bits
+    //Function to return sum of count of set bits in the integers from 1 to n.
+    int power_2_in(int n){
+        int x = 0;
+        while((1<<x)<=n)
+        x++;
+        return x-1;
+    }
+    int countSetBits(int n)
+    {
+        // Your logic here
+        if(n==0)
+        return 0;
+        int x = power_2_in(n);
+        int p1 = x*(1<<(x-1));
+        int p2 = n-(1<<x)+1;
+        int val = n-(1<<x);
+        int ans = p1+p2+countSetBits(val);
+        return ans;
+    }
+};
