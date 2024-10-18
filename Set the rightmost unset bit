@@ -1,0 +1,9 @@
+class Solution {
+  public:
+    int setBit(int n) {
+        // Write Your Code here
+        //by using bit manipulation concept :
+        n = ~n;
+        return ~(n&n-1);
+    }
+};
