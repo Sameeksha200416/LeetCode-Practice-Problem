@@ -1,0 +1,15 @@
+void MyQueue :: push(int x)
+{
+        // Your Code
+        arr[front]=x;
+        front++;
+}
+
+//Function to pop an element from queue and return that element.
+int MyQueue :: pop()
+{
+        // Your Code
+    if(rear==front || rear>front)return -1;
+    rear++;
+    return arr[rear-1];
+}
