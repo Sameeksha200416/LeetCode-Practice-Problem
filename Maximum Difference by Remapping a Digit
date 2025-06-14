@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int minMaxDifference(int num) {
+        string s = to_string(num);
+        string maxi = s, mini = s;
+        bool flag = false;
+        char x = '0';
+        for(int i=0;i<s.length();i++)
+        {
+            if(maxi[i]!='9' && flag == false){
+                x = maxi[i];
+                maxi[i] = '9';
+                flag = true;
+            }
+            else if(maxi[i] == x && flag){
+                maxi[i] = '9';
+            }
+        }
+        flag = false;
+        for(int i=0;i<s.length();i++)
+        {
+            if(mini[i]!='0'&& flag==false){
+                x = mini[i];
+                mini[i] = '0';
+                flag = true;
+            }
+            else if(mini[i] == x && flag){
+                mini[i] = '0';
+            }
+        }
+        return stoi(maxi) - stoi(mini);
+    }
+};
