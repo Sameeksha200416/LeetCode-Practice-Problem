@@ -1,0 +1,26 @@
+class Solution {
+public:
+int n;
+void dfs(vector<vector<int>>& adj,vector<bool>& visit,int u){
+    visit[u] = 1;
+       //Visit neighbours
+    for(int v = 0; v < n; v++) {
+            if(adj[u][v] == 1 && !visit[v]) {
+            dfs(adj,visit,v);
+        }
+    }
+}
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        n = isConnected.size();
+        vector<bool>visit(n,0);
+        int count = 0;
+        for(int i=0;i<n;i++)
+        {
+            if(!visit[i]){
+                count++;
+                dfs(isConnected,visit,i);
+            }
+        }
+        return count;
+    }
+};
