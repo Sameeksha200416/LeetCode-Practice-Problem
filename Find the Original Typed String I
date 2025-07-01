@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int possibleStringCount(string word) {
+    int p = word.length();
+    int count = p;
+    for(int i=1;i<p;i++)
+    {
+        if(word[i] != word[i-1])
+        {
+            count--;
+        }
+    }
+    return count;
+    }
+};
