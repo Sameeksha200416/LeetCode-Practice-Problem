@@ -1,0 +1,16 @@
+class Solution {
+public:
+    char kthCharacter(int k) {
+        //convert to 0based index
+        k--;
+        int operation = 0;
+        int temp = k;
+        //count set bit using bit manipulation
+        while(temp>0)
+        {
+            operation += temp & 1;
+            temp>>=1;
+        }
+        return 'a'+ operation;
+    }
+};
