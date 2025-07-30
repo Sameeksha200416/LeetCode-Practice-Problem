@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    // DFS function to detect cycle and perform topological sort
+    bool dfs(int node, vector<vector<int>>& adj, vector<bool>& visited, vector<bool>& recStack, vector<int>& result) {
+        visited[node] = true;       // Mark node as visited
+        recStack[node] = true;      // Mark node in the current recursion stack
+
+        // Traverse all neighbors (dependencies)
+        for (int i = 0; i < adj[node].size(); i++) {
+            int neighbor = adj[node][i];
+
+            // If neighbor is not visited, recur for it
+            if (!visited[neighbor]) {
+                if (dfs(neighbor, adj, visited, recStack, result)) {
+                    return true;  // Cycle found
+                }
+            } 
+            // If neighbor is in recursion stack, a cycle exists
+            else if (recStack[neighbor]) {
+                return true;  // Cycle found (back edge)
+            }
+        }
+
+        recStack[node] = false;     // Remove node from recursion stack
+        result.push_back(node);     // Add to result for topological sort
+        return false;               // No cycle from this node
+    }
+
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        // Step 1: Build adjacency list
+        vector<vector<int>> adj(numCourses);
+        for (int i = 0; i < prerequisites.size(); i++) {
+            int a = prerequisites[i][0];  // course to take
+            int b = prerequisites[i][1];  // prerequisite
+            adj[b].push_back(a);          // b → a means b should be taken before a
+        }
+
+        vector<bool> visited(numCourses, false);   // To track visited nodes
+        vector<bool> recStack(numCourses, false);  // To detect cycles
+        vector<int> result;                        // Stores topological order
+
+        // Step 2: DFS for all nodes (to cover disconnected components)
+        for (int i = 0; i < numCourses; i++) {
+            if (!visited[i]) {
+                if (dfs(i, adj, visited, recStack, result)) {
+                    return {};  // If cycle found, return empty vector
+                }
+            }
+        }
+
+        // Step 3: Reverse result to get correct topological order
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
