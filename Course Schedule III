@@ -1,0 +1,37 @@
+class Solution {
+public:
+vector<int>res;
+bool dfs(vector<vector<int>>& adj,int curr,vector<bool>& visited,vector<bool>& visitpath){
+    if(visitpath[curr]) return false;
+    if(visited[curr])return true;
+    visitpath[curr] = true;
+    for(auto pre : adj[curr]){
+        if(!dfs(adj,pre,visited,visitpath))return false;
+    }
+    visitpath[curr] = false;
+    visited[curr] = true;
+    res.push_back(curr);
+    return true;
+}
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+        vector<bool>visited(numCourses,false);
+        vector<bool>visitpath(numCourses,false);
+
+        //build the adj list
+        for(int i=0;i<prerequisites.size();i++)
+        {
+            int a = prerequisites[i][0];
+            int b = prerequisites[i][1];
+            adj[b].push_back(a);
+        }
+        for(int i=0; i<numCourses; i++)
+        {
+            if(!visited[i] && !dfs(adj,i,visited,visitpath)){
+                return {}; //if a cycle ids detect
+            }
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
