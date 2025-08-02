@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n = graph.size();
+        vector<vector<int>> revgraph(n); // reversed graph
+        vector<int> indegree(n, 0);
+
+        // Step 1: Create reversed graph and compute indegrees
+        for (int u = 0; u < n; u++) {
+            for (int v : graph[u]) {
+                revgraph[v].push_back(u); // reverse the edge
+                indegree[u]++;
+            }
+        }
+
+        // Step 2: Initialize queue with nodes having 0 indegree
+        queue<int> q;
+        for (int i = 0; i < n; i++) {
+            if (indegree[i] == 0) {
+                q.push(i);
+            }
+        }
+
+        // Step 3: BFS
+        vector<bool> safe(n, false);
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+            safe[node] = true;
+            for (int neigh : revgraph[node]) {
+                indegree[neigh]--;
+                if (indegree[neigh] == 0) {
+                    q.push(neigh);
+                }
+            }
+        }
+
+        // Step 4: Collect safe nodes
+        vector<int> result;
+        for (int i = 0; i < n; i++) {
+            if (safe[i]) result.push_back(i);
+        }
+
+        return result;
+    }
+};
