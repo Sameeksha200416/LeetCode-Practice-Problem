@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxBalancedShipments(vector<int>& weight) {
+         int n = weight.size();
+        int count = 0;
+        int start = 0;
+
+        while (start < n) {
+            int maxW = weight[start];
+            int i = start + 1;
+            bool found = false;
+
+            while (i < n) {
+                maxW = max(maxW, weight[i]);
+                if (weight[i] < maxW) {
+                    // Valid shipment from start to i
+                    count++;
+                    start = i + 1; // move to next shipment
+                    found = true;
+                    break;
+                }
+                i++;
+            }
+
+            if (!found) break; // No valid shipment from current start
+        }
+
+        return count;
+    }
+};
